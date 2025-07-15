@@ -18,6 +18,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminHunts from "./pages/AdminHunts";
 import AdminStats from "./pages/AdminStats";
 import GameExperience from "./pages/GameExperience";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -26,26 +27,28 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/hunts" element={<AvailableHunts />} />
-          <Route path="/hunt/:id" element={<HuntDetail />} />
-          <Route path="/game/:id" element={<GameExperience />} />
-          <Route path="/my-hunts" element={<MyHunts />} />
-          <Route path="/create-hunt" element={<CreateHunt />} />
-          <Route path="/dashboard" element={<HuntDashboard />} />
-          <Route path="/rewards" element={<Rewards />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/users" element={<AdminUsers />} />
-          <Route path="/admin/hunts" element={<AdminHunts />} />
-          <Route path="/admin/stats" element={<AdminStats />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/hunts" element={<AvailableHunts />} />
+            <Route path="/hunt/:id" element={<HuntDetail />} />
+            <Route path="/game/:id" element={<GameExperience />} />
+            <Route path="/my-hunts" element={<MyHunts />} />
+            <Route path="/create-hunt" element={<CreateHunt />} />
+            <Route path="/dashboard" element={<HuntDashboard />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/users" element={<AdminUsers />} />
+            <Route path="/admin/hunts" element={<AdminHunts />} />
+            <Route path="/admin/stats" element={<AdminStats />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

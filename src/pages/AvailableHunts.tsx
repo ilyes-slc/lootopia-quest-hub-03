@@ -16,6 +16,7 @@ import {
   Gem,
   SlidersHorizontal
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const mockHunts = [
   {
@@ -137,6 +138,8 @@ const AvailableHunts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [sortBy, setSortBy] = useState("rating");
+  const { user } = useAuth();
+  const isOrga = user?.role === "ORGANISATEUR";
 
   const filteredHunts = mockHunts.filter(hunt => {
     const matchesSearch = hunt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -261,9 +264,11 @@ const AvailableHunts = () => {
           <p className="text-muted-foreground">
             {sortedHunts.length} chasse{sortedHunts.length > 1 ? 's' : ''} trouvée{sortedHunts.length > 1 ? 's' : ''}
           </p>
-          <Button variant="treasure" asChild>
-            <Link to="/create-hunt">Créer une chasse</Link>
-          </Button>
+          {isOrga && (
+            <Button variant="treasure" asChild>
+              <Link to="/create-hunt">Créer une chasse</Link>
+            </Button>
+          )}
         </div>
 
         {/* Hunt Cards Grid */}
@@ -342,11 +347,13 @@ const AvailableHunts = () => {
             <Filter className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-medium mb-2">Aucune chasse trouvée</h3>
             <p className="text-muted-foreground mb-4">
-              Essayez de modifier vos filtres ou créez votre propre chasse !
+              Essayez de modifier vos filtres{isOrga ? ' ou créez votre propre chasse !' : ' !'}
             </p>
-            <Button variant="treasure" asChild>
-              <Link to="/create-hunt">Créer une chasse</Link>
-            </Button>
+            {isOrga && (
+              <Button variant="treasure" asChild>
+                <Link to="/create-hunt">Créer une chasse</Link>
+              </Button>
+            )}
           </div>
         )}
       </div>

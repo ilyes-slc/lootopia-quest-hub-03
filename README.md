@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# Lootopia Quest Hub
 
-## Project info
+A modern web app for treasure hunt management and participation, featuring role-based authentication (JOUEUR, ORGANISATEUR, ADMINISTRATEUR).
 
-**URL**: https://lovable.dev/projects/60110c67-df21-4991-8dbb-6ba13f309751
+## 🚀 Getting Started
 
-## How can I edit this code?
+### 1. Clone the Repository
+```bash
+git clone <repo-url>
+cd lootopia-quest-hub-03-main
+```
 
-There are several ways of editing your application.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/60110c67-df21-4991-8dbb-6ba13f309751) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 3. Run the Development Server
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at [http://localhost:8080](http://localhost:8080) (or the port shown in your terminal).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## 🔐 Authentication & Roles
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The app uses a static user list for authentication. You can log in as any of the following users to test different roles:
 
-## What technologies are used for this project?
+| Role              | Email                | Password   |
+|-------------------|---------------------|------------|
+| JOUEUR            | joueur@example.com   | joueur123  |
+| ORGANISATEUR      | orga@example.com     | orga123    |
+| ADMINISTRATEUR    | admin@example.com    | admin123   |
 
-This project is built with:
+- **JOUEUR**: Can join and play hunts, but cannot create hunts.
+- **ORGANISATEUR**: Can create and manage their own hunts.
+- **ADMINISTRATEUR**: Has access to admin pages.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
+---
+
+## 🧭 Features
+- Role-based navigation and page access
+- Simulated login/logout with persistent session
+- Responsive UI with modern design
+- Toast notifications for feedback
+
+---
+
+## 🛠️ Tech Stack
+- React + TypeScript
+- React Router
 - Tailwind CSS
+- Lucide Icons
+- [Other dependencies: see `package.json`]
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/60110c67-df21-4991-8dbb-6ba13f309751) and click on Share -> Publish.
+## 📝 Notes
+- No backend required: all authentication is simulated with static users.
+- To test different roles, log out and log in with another user from the table above.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## 📂 Project Structure
+- `src/pages/` — Main app pages (Login, Hunts, Admin, etc.)
+- `src/components/` — UI and layout components
+- `src/lib/staticUsers.ts` — Static user list
+- `src/lib/authService.ts` — Auth logic
+- `src/contexts/AuthContext.tsx` — Auth context provider
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+[MIT](LICENSE)

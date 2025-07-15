@@ -19,6 +19,7 @@ import {
   Eye,
   Plus
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const mockPlayerHunts = [
   {
@@ -121,6 +122,8 @@ const getStatusColor = (status: string) => {
 
 const MyHunts = () => {
   const [activeTab, setActiveTab] = useState("player");
+  const { user } = useAuth();
+  const isJoueur = user?.role === "JOUEUR";
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,7 +147,7 @@ const MyHunts = () => {
               <Play className="h-4 w-4" />
               Mes Participations
             </TabsTrigger>
-            <TabsTrigger value="organizer" className="flex items-center gap-2">
+            <TabsTrigger value="organizer" className="flex items-center gap-2" disabled={isJoueur} style={isJoueur ? { pointerEvents: 'none', opacity: 0.5 } : {}}>
               <Settings className="h-4 w-4" />
               Mes Créations
             </TabsTrigger>
@@ -298,153 +301,156 @@ const MyHunts = () => {
           </TabsContent>
 
           {/* Organizer Tab */}
-          <TabsContent value="organizer">
-            <div className="space-y-6">
-              {/* Quick Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-2">
-                      <Settings className="h-8 w-8 text-primary" />
-                      <div>
-                        <div className="text-2xl font-bold">3</div>
-                        <div className="text-sm text-muted-foreground">Chasses créées</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-2">
-                      <Users className="h-8 w-8 text-primary" />
-                      <div>
-                        <div className="text-2xl font-bold">33</div>
-                        <div className="text-sm text-muted-foreground">Participants totaux</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-2">
-                      <Star className="h-8 w-8 text-primary" />
-                      <div>
-                        <div className="text-2xl font-bold">4.8</div>
-                        <div className="text-sm text-muted-foreground">Note moyenne</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-2">
-                      <Trophy className="h-8 w-8 text-primary" />
-                      <div>
-                        <div className="text-2xl font-bold">3700</div>
-                        <div className="text-sm text-muted-foreground">Revenus totaux</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Create Button */}
-              <div className="flex justify-end mb-6">
-                <Button variant="treasure" asChild>
-                  <Link to="/create-hunt">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Créer une nouvelle chasse
-                  </Link>
-                </Button>
-              </div>
-
-              {/* Hunt Cards */}
-              <div className="grid gap-6">
-                {mockOrganizerHunts.map((hunt) => (
-                  <Card key={hunt.id} className="overflow-hidden">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="text-4xl">{hunt.image}</div>
-                        
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between mb-3">
-                            <div>
-                              <h3 className="text-xl font-bold mb-1">{hunt.title}</h3>
-                              <Badge className={getStatusColor(hunt.status)}>
-                                {hunt.status}
-                              </Badge>
-                            </div>
-                            
-                            <div className="flex gap-2">
-                              <Button size="sm" variant="outline" asChild>
-                                <Link to={`/hunt/${hunt.id}`}>
-                                  <Settings className="h-4 w-4 mr-2" />
-                                  Gérer
-                                </Link>
-                              </Button>
-                              <Button size="sm" variant="treasure" asChild>
-                                <Link to={`/hunt-dashboard/${hunt.id}`}>
-                                  <Eye className="h-4 w-4 mr-2" />
-                                  Tableau de bord
-                                </Link>
-                              </Button>
-                            </div>
-                          </div>
-
-                          {/* Hunt Stats */}
-                          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-4">
-                            <div className="flex items-center gap-2">
-                              <Users className="h-4 w-4 text-primary" />
-                              <span>{hunt.participants}/{hunt.maxParticipants}</span>
-                            </div>
-                            
-                            <div className="flex items-center gap-2">
-                              <Eye className="h-4 w-4 text-primary" />
-                              <span>{hunt.views} vues</span>
-                            </div>
-                            
-                            <div className="flex items-center gap-2">
-                              <Users className="h-4 w-4 text-primary" />
-                              <span>{hunt.applicants} candidats</span>
-                            </div>
-                            
-                            {hunt.rating > 0 && (
-                              <div className="flex items-center gap-2">
-                                <Star className="h-4 w-4 text-primary fill-primary" />
-                                <span>{hunt.rating}</span>
-                              </div>
-                            )}
-                            
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-4 w-4 text-primary" />
-                              <span>
-                                {hunt.createdDate && `Créée le ${hunt.createdDate}`}
-                                {hunt.startDate && `Début le ${hunt.startDate}`}
-                                {hunt.completedDate && `Terminée le ${hunt.completedDate}`}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="p-3 bg-primary/10 rounded-lg">
-                            <p className="text-sm font-medium text-primary">
-                              {hunt.revenue && `Revenus: ${hunt.revenue}`}
-                              {hunt.estimatedRevenue && `Revenus estimés: ${hunt.estimatedRevenue}`}
-                            </p>
-                            {hunt.feedback && (
-                              <p className="text-xs text-muted-foreground">{hunt.feedback} commentaires reçus</p>
-                            )}
-                          </div>
+          {/* Only show organizer tab content if not JOUEUR */}
+          {!isJoueur && (
+            <TabsContent value="organizer">
+              <div className="space-y-6">
+                {/* Quick Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-2">
+                        <Settings className="h-8 w-8 text-primary" />
+                        <div>
+                          <div className="text-2xl font-bold">3</div>
+                          <div className="text-sm text-muted-foreground">Chasses créées</div>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                ))}
+                  
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-2">
+                        <Users className="h-8 w-8 text-primary" />
+                        <div>
+                          <div className="text-2xl font-bold">33</div>
+                          <div className="text-sm text-muted-foreground">Participants totaux</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-2">
+                        <Star className="h-8 w-8 text-primary" />
+                        <div>
+                          <div className="text-2xl font-bold">4.8</div>
+                          <div className="text-sm text-muted-foreground">Note moyenne</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="flex items-center gap-2">
+                        <Trophy className="h-8 w-8 text-primary" />
+                        <div>
+                          <div className="text-2xl font-bold">3700</div>
+                          <div className="text-sm text-muted-foreground">Revenus totaux</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Create Button */}
+                <div className="flex justify-end mb-6">
+                  <Button variant="treasure" asChild>
+                    <Link to="/create-hunt">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Créer une nouvelle chasse
+                    </Link>
+                  </Button>
+                </div>
+
+                {/* Hunt Cards */}
+                <div className="grid gap-6">
+                  {mockOrganizerHunts.map((hunt) => (
+                    <Card key={hunt.id} className="overflow-hidden">
+                      <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                          <div className="text-4xl">{hunt.image}</div>
+                          
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between mb-3">
+                              <div>
+                                <h3 className="text-xl font-bold mb-1">{hunt.title}</h3>
+                                <Badge className={getStatusColor(hunt.status)}>
+                                  {hunt.status}
+                                </Badge>
+                              </div>
+                              
+                              <div className="flex gap-2">
+                                <Button size="sm" variant="outline" asChild>
+                                  <Link to={`/hunt/${hunt.id}`}>
+                                    <Settings className="h-4 w-4 mr-2" />
+                                    Gérer
+                                  </Link>
+                                </Button>
+                                <Button size="sm" variant="treasure" asChild>
+                                  <Link to={`/dashboard`}>
+                                    <Eye className="h-4 w-4 mr-2" />
+                                    Tableau de bord
+                                  </Link>
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Hunt Stats */}
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm mb-4">
+                              <div className="flex items-center gap-2">
+                                <Users className="h-4 w-4 text-primary" />
+                                <span>{hunt.participants}/{hunt.maxParticipants}</span>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <Eye className="h-4 w-4 text-primary" />
+                                <span>{hunt.views} vues</span>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <Users className="h-4 w-4 text-primary" />
+                                <span>{hunt.applicants} candidats</span>
+                              </div>
+                              
+                              {hunt.rating > 0 && (
+                                <div className="flex items-center gap-2">
+                                  <Star className="h-4 w-4 text-primary fill-primary" />
+                                  <span>{hunt.rating}</span>
+                                </div>
+                              )}
+                              
+                              <div className="flex items-center gap-2">
+                                <Calendar className="h-4 w-4 text-primary" />
+                                <span>
+                                  {hunt.createdDate && `Créée le ${hunt.createdDate}`}
+                                  {hunt.startDate && `Début le ${hunt.startDate}`}
+                                  {hunt.completedDate && `Terminée le ${hunt.completedDate}`}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="p-3 bg-primary/10 rounded-lg">
+                              <p className="text-sm font-medium text-primary">
+                                {hunt.revenue && `Revenus: ${hunt.revenue}`}
+                                {hunt.estimatedRevenue && `Revenus estimés: ${hunt.estimatedRevenue}`}
+                              </p>
+                              {hunt.feedback && (
+                                <p className="text-xs text-muted-foreground">{hunt.feedback} commentaires reçus</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
-          </TabsContent>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
     </div>

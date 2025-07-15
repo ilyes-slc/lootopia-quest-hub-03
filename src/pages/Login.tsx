@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ import {
   Github,
   Chrome
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,18 +40,33 @@ const Login = () => {
     enableMFA: false
   });
   const { toast } = useToast();
+  const { login: authLogin } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulation de connexion
-    toast({
-      title: "Connexion réussie !",
-      description: "Vous allez être redirigé vers votre tableau de bord.",
-    });
-    // Redirection simulée
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 1500);
+    const success = authLogin(loginForm.email, loginForm.password);
+    if (success) {
+      const user = JSON.parse(localStorage.getItem("auth_user")!);
+      toast({
+        title: "Connexion réussie !",
+        description: `Bienvenue, ${user.firstName} ${user.lastName}`,
+      });
+      // Redirect based on role
+      if (user.role === "ADMINISTRATEUR") {
+        navigate("/admin");
+      } else if (user.role === "ORGANISATEUR") {
+        navigate("/dashboard");
+      } else {
+        navigate("/hunts");
+      }
+    } else {
+      toast({
+        title: "Erreur de connexion",
+        description: "Email ou mot de passe incorrect.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleSignup = (e: React.FormEvent) => {
