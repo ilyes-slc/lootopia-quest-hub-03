@@ -13,6 +13,10 @@ import CreateHunt from "./pages/CreateHunt";
 import HuntDashboard from "./pages/HuntDashboard";
 import Rewards from "./pages/Rewards";
 import NotFound from "./pages/NotFound";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminHunts from "./pages/AdminHunts";
+import AdminStats from "./pages/AdminStats";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +36,10 @@ const App = () => (
           <Route path="/create-hunt" element={<CreateHunt />} />
           <Route path="/dashboard" element={<HuntDashboard />} />
           <Route path="/rewards" element={<Rewards />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/hunts" element={<AdminHunts />} />
+          <Route path="/admin/stats" element={<AdminStats />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

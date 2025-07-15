@@ -1,36 +1,39 @@
 import { Button } from "@/components/ui/button";
-import { Compass, Search, User, Menu } from "lucide-react";
+import { Compass, Search, User, Menu, Shield } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <Compass className="h-8 w-8 text-primary animate-float" />
             <h1 className="text-2xl font-bold bg-gradient-treasure bg-clip-text text-transparent">
               Lootopia
             </h1>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#hunts" className="text-foreground hover:text-primary transition-colors">
+            <Link to="/hunts" className="text-foreground hover:text-primary transition-colors">
               Chasses
-            </a>
-            <a href="#leaderboard" className="text-foreground hover:text-primary transition-colors">
-              Classements
-            </a>
-            <a href="#marketplace" className="text-foreground hover:text-primary transition-colors">
-              Marché
-            </a>
-            <a href="#shop" className="text-foreground hover:text-primary transition-colors">
-              Boutique
-            </a>
+            </Link>
+            <Link to="/my-hunts" className="text-foreground hover:text-primary transition-colors">
+              Mes Chasses
+            </Link>
+            <Link to="/rewards" className="text-foreground hover:text-primary transition-colors">
+              Récompenses
+            </Link>
+            <Link to="/admin" className="text-foreground hover:text-primary transition-colors flex items-center gap-1">
+              <Shield className="h-4 w-4" />
+              Admin
+            </Link>
           </nav>
 
           {/* Actions */}
@@ -38,12 +41,16 @@ export const Header = () => {
             <Button variant="ghost" size="icon" className="hidden md:flex">
               <Search className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="icon">
-              <User className="h-4 w-4" />
-            </Button>
-            <Button variant="treasure" className="hidden sm:flex">
-              Connexion
-            </Button>
+            <Link to="/profile">
+              <Button variant="ghost" size="icon">
+                <User className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button variant="treasure" className="hidden sm:flex">
+                Connexion
+              </Button>
+            </Link>
             
             {/* Mobile Menu Button */}
             <Button 
@@ -61,21 +68,24 @@ export const Header = () => {
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t border-border pt-4">
             <div className="flex flex-col gap-3">
-              <a href="#hunts" className="text-foreground hover:text-primary transition-colors py-2">
+              <Link to="/hunts" className="text-foreground hover:text-primary transition-colors py-2">
                 Chasses
-              </a>
-              <a href="#leaderboard" className="text-foreground hover:text-primary transition-colors py-2">
-                Classements
-              </a>
-              <a href="#marketplace" className="text-foreground hover:text-primary transition-colors py-2">
-                Marché
-              </a>
-              <a href="#shop" className="text-foreground hover:text-primary transition-colors py-2">
-                Boutique
-              </a>
-              <Button variant="treasure" className="w-full mt-2">
-                Connexion
-              </Button>
+              </Link>
+              <Link to="/my-hunts" className="text-foreground hover:text-primary transition-colors py-2">
+                Mes Chasses
+              </Link>
+              <Link to="/rewards" className="text-foreground hover:text-primary transition-colors py-2">
+                Récompenses
+              </Link>
+              <Link to="/admin" className="text-foreground hover:text-primary transition-colors py-2 flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+              <Link to="/login" className="w-full mt-2">
+                <Button variant="treasure" className="w-full">
+                  Connexion
+                </Button>
+              </Link>
             </div>
           </nav>
         )}
