@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminUsers from "./pages/AdminUsers";
 import AdminHunts from "./pages/AdminHunts";
 import AdminStats from "./pages/AdminStats";
+import GameExperience from "./pages/GameExperience";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/hunts" element={<AvailableHunts />} />
           <Route path="/hunt/:id" element={<HuntDetail />} />
+          <Route path="/game/:id" element={<GameExperience />} />
           <Route path="/my-hunts" element={<MyHunts />} />
           <Route path="/create-hunt" element={<CreateHunt />} />
           <Route path="/dashboard" element={<HuntDashboard />} />

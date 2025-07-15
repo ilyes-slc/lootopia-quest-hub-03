@@ -303,6 +303,14 @@ const HuntDetail = () => {
                     <Trophy className="h-4 w-4 mr-2" />
                     Rejoindre la chasse
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    onClick={() => window.location.href = '/game/1'}
+                  >
+                    <Trophy className="h-4 w-4 mr-2" />
+                    Commencer la chasse
+                  </Button>
                   <Button variant="outline" className="w-full">
                     <Share2 className="h-4 w-4 mr-2" />
                     Partager
