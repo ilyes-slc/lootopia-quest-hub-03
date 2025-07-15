@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -282,9 +283,11 @@ const HuntDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-4">
-                  <Button variant="outline">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Modifier la chasse
+                  <Button variant="outline" asChild>
+                    <Link to={`/hunt/${mockHuntData.id}/edit`}>
+                      <Settings className="h-4 w-4 mr-2" />
+                      Modifier la chasse
+                    </Link>
                   </Button>
                   <Button variant="outline">
                     <Users className="h-4 w-4 mr-2" />

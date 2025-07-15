@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -388,9 +389,11 @@ const Rewards = () => {
 
               {/* Create Button */}
               <div className="flex justify-end mb-6">
-                <Button variant="treasure">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Créer une récompense
+                <Button variant="treasure" asChild>
+                  <Link to="/create-reward">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Créer une récompense
+                  </Link>
                 </Button>
               </div>
 
@@ -429,9 +432,11 @@ const Rewards = () => {
                         </div>
                         
                         <div className="flex gap-2 ml-4">
-                          <Button size="sm" variant="outline">
-                            <Settings className="h-4 w-4 mr-2" />
-                            Configurer
+                          <Button size="sm" variant="outline" asChild>
+                            <Link to={`/reward-config/${reward.id}`}>
+                              <Settings className="h-4 w-4 mr-2" />
+                              Configurer
+                            </Link>
                           </Button>
                           {reward.status === "active" && (
                             <Button size="sm" variant="treasure">

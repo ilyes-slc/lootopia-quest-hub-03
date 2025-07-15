@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -260,8 +261,8 @@ const AvailableHunts = () => {
           <p className="text-muted-foreground">
             {sortedHunts.length} chasse{sortedHunts.length > 1 ? 's' : ''} trouvée{sortedHunts.length > 1 ? 's' : ''}
           </p>
-          <Button variant="treasure">
-            Créer une chasse
+          <Button variant="treasure" asChild>
+            <Link to="/create-hunt">Créer une chasse</Link>
           </Button>
         </div>
 
@@ -324,11 +325,11 @@ const AvailableHunts = () => {
               </CardContent>
 
               <CardFooter className="flex gap-2">
-                <Button className="flex-1" variant="outline">
-                  Voir détails
+                <Button className="flex-1" variant="outline" asChild>
+                  <Link to={`/hunt/${hunt.id}`}>Voir détails</Link>
                 </Button>
-                <Button className="flex-1" variant="treasure">
-                  Rejoindre
+                <Button className="flex-1" variant="treasure" asChild>
+                  <Link to={`/game/${hunt.id}`}>Rejoindre</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -343,8 +344,8 @@ const AvailableHunts = () => {
             <p className="text-muted-foreground mb-4">
               Essayez de modifier vos filtres ou créez votre propre chasse !
             </p>
-            <Button variant="treasure">
-              Créer une chasse
+            <Button variant="treasure" asChild>
+              <Link to="/create-hunt">Créer une chasse</Link>
             </Button>
           </div>
         )}

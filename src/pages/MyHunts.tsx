@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -227,9 +228,11 @@ const MyHunts = () => {
                                   Pause
                                 </Button>
                               )}
-                              <Button size="sm" variant="treasure">
-                                <Eye className="h-4 w-4 mr-2" />
-                                Voir
+                              <Button size="sm" variant="treasure" asChild>
+                                <Link to={`/game/${hunt.id}`}>
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  Voir
+                                </Link>
                               </Button>
                             </div>
                           </div>
@@ -350,9 +353,11 @@ const MyHunts = () => {
 
               {/* Create Button */}
               <div className="flex justify-end mb-6">
-                <Button variant="treasure">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Créer une nouvelle chasse
+                <Button variant="treasure" asChild>
+                  <Link to="/create-hunt">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Créer une nouvelle chasse
+                  </Link>
                 </Button>
               </div>
 
@@ -374,13 +379,17 @@ const MyHunts = () => {
                             </div>
                             
                             <div className="flex gap-2">
-                              <Button size="sm" variant="outline">
-                                <Settings className="h-4 w-4 mr-2" />
-                                Gérer
+                              <Button size="sm" variant="outline" asChild>
+                                <Link to={`/hunt/${hunt.id}`}>
+                                  <Settings className="h-4 w-4 mr-2" />
+                                  Gérer
+                                </Link>
                               </Button>
-                              <Button size="sm" variant="treasure">
-                                <Eye className="h-4 w-4 mr-2" />
-                                Tableau de bord
+                              <Button size="sm" variant="treasure" asChild>
+                                <Link to={`/hunt-dashboard/${hunt.id}`}>
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  Tableau de bord
+                                </Link>
                               </Button>
                             </div>
                           </div>
